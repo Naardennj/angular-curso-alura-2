@@ -1,6 +1,5 @@
 <main class="principal">
   <h2 class="principal__titulo">Dados do cadastro</h2>
-
   <form
     class="principal__formulario"
     id="formulario"
@@ -17,23 +16,17 @@
         ngModel
         required
         minlength="2"
+        #nome="ngModel"
       />
-      <div
-        *ngIf="
-          (f.controls['nome']?.invalid && f.controls['nome']?.touched) ||
-          f.controls['nome']?.dirty
-        "
-      >
-        <span
-          class="erro__texto"
+      <div *ngIf="(nome?.invalid && nome?.touched) || nome?.dirty">
+        <app-mensagem
           *ngIf="f.controls['nome']?.errors?.['required']"
-          >O campo de nome deve ser preenchido.</span
-        >
-        <span
-          class="erro__texto"
+          mensagem="O campo de nome deve ser preenchido."
+        ></app-mensagem>
+        <app-mensagem
           *ngIf="f.controls['nome']?.errors?.['minlength']"
-          >O campo de nome deve ter no minimo 2 caracteres.</span
-        >
+          mensagem="O campo de nome deve ter no minimo 2 caracteres."
+        ></app-mensagem>
       </div>
     </div>
     <div class="formulario__dupla">
@@ -44,6 +37,7 @@
           id="nascimento"
           type="date"
           class="campo__escrita"
+          ngModel
         />
       </div>
       <div class="formulario__campo">
@@ -54,14 +48,48 @@
           type="tel"
           placeholder="(XX) XXXXX-XXXX"
           class="campo__escrita"
+          ngModel
+          required
+          pattern="(\(?\d{2}\)?\s?)(\d{5}\-?\d{4})"
+          #telefone="ngModel"
         />
+        <div
+          *ngIf="(telefone?.invalid && telefone?.touched) || telefone?.dirty"
+        >
+          <app-mensagem
+            *ngIf="f.controls['telefone']?.errors?.['required']"
+            mensagem="O campo de telefone deve ser preenchido."
+          ></app-mensagem>
+          <app-mensagem
+            *ngIf="f.controls['telefone']?.errors?.['pattern']"
+            mensagem="O campo de telefone possui algum erro."
+          ></app-mensagem>
+        </div>
       </div>
     </div>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="email">E-mail</label>
-      <input name="email" id="email" type="email" class="campo__escrita" />
+      <input
+        name="email"
+        id="email"
+        type="email"
+        class="campo__escrita"
+        ngModel
+        required
+        email
+        #email="ngModel"
+      />
+      <div *ngIf="(email?.invalid && email?.touched) || email?.dirty">
+        <app-mensagem
+          *ngIf="f.controls['email']?.errors?.['required']"
+          mensagem="O campo de email deve ser preenchido."
+        ></app-mensagem>
+        <app-mensagem
+          *ngIf="f.controls['email']?.errors?.['email']"
+          mensagem="O campo de email deve seguir o padrão."
+        ></app-mensagem>
+      </div>
     </div>
-
     <h3 class="principal__subtitulo">Endereço</h3>
 
     <div class="formulario__campo">
