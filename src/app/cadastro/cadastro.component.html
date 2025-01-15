@@ -7,6 +7,7 @@
     (ngSubmit)="cadastrar(f)"
   >
     <h3 class="principal__subtitulo">Dados pessoais</h3>
+    <!--Nome Completo-->
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="nome">Nome Completo</label>
       <input
@@ -20,15 +21,16 @@
       />
       <div *ngIf="(nome?.invalid && nome?.touched) || nome?.dirty">
         <app-mensagem
-          *ngIf="f.controls['nome']?.errors?.['required']"
+          *ngIf="nome?.errors?.['required']"
           mensagem="O campo de nome deve ser preenchido."
         ></app-mensagem>
         <app-mensagem
-          *ngIf="f.controls['nome']?.errors?.['minlength']"
+          *ngIf="nome?.errors?.['minlength']"
           mensagem="O campo de nome deve ter no minimo 2 caracteres."
         ></app-mensagem>
       </div>
     </div>
+    <!--Nascimento-->
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="nascimento">Nascimento</label>
@@ -38,8 +40,26 @@
           type="date"
           class="campo__escrita"
           ngModel
+          required
+          maiorIdadeValidator
+          #nascimento="ngModel"
         />
+        <div
+          *ngIf="
+            (nascimento?.invalid && nascimento?.touched) || nascimento?.dirty
+          "
+        >
+          <app-mensagem
+            *ngIf="nascimento?.errors?.['required']"
+            mensagem="A data de nascimento deve ser preenchida."
+          ></app-mensagem>
+          <app-mensagem
+            *ngIf="nascimento?.errors?.['maiorIdadeValidator']"
+            mensagem="O Usuario deve ser maior de 18 anos."
+          ></app-mensagem>
+        </div>
       </div>
+      <!--Contato-->
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="telefone">Contato</label>
         <input
@@ -57,16 +77,17 @@
           *ngIf="(telefone?.invalid && telefone?.touched) || telefone?.dirty"
         >
           <app-mensagem
-            *ngIf="f.controls['telefone']?.errors?.['required']"
+            *ngIf="telefone?.errors?.['required']"
             mensagem="O campo de telefone deve ser preenchido."
           ></app-mensagem>
           <app-mensagem
-            *ngIf="f.controls['telefone']?.errors?.['pattern']"
+            *ngIf="telefone?.errors?.['pattern']"
             mensagem="O campo de telefone possui algum erro."
           ></app-mensagem>
         </div>
       </div>
     </div>
+    <!--Email-->
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="email">E-mail</label>
       <input
@@ -81,15 +102,16 @@
       />
       <div *ngIf="(email?.invalid && email?.touched) || email?.dirty">
         <app-mensagem
-          *ngIf="f.controls['email']?.errors?.['required']"
+          *ngIf="email?.errors?.['required']"
           mensagem="O campo de email deve ser preenchido."
         ></app-mensagem>
         <app-mensagem
-          *ngIf="f.controls['email']?.errors?.['email']"
+          *ngIf="email?.errors?.['email']"
           mensagem="O campo de email deve seguir o padrão."
         ></app-mensagem>
       </div>
     </div>
+    <!--Local-->
     <h3 class="principal__subtitulo">Endereço</h3>
 
     <div class="formulario__campo">
@@ -97,31 +119,35 @@
       <input name="cep" id="cep" class="campo__escrita" />
       <div id="erro"></div>
     </div>
-
+    <!--Endereço-->
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="endereco">Endereço</label>
       <input name="endereco" id="endereco" class="campo__escrita" />
     </div>
+    <!--Numero-->
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="numero">Numero</label>
         <input name="numero" id="numero" class="campo__escrita" />
       </div>
+      <!--Complemento-->
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="complemento">Complemento</label>
         <input name="complemento" id="complemento" class="campo__escrita" />
       </div>
     </div>
+    <!--Bairro-->
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="bairro">Bairro</label>
       <input name="bairro" id="bairro" class="campo__escrita" />
     </div>
+    <!--Cidade-->
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="cidade">Cidade</label>
         <input name="cidade" id="cidade" class="campo__escrita" />
       </div>
-
+      <!--Estado-->
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="estado">UF</label>
         <select id="estado" name="estado" class="campo__escrita">
